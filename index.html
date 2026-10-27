@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Value Investing Engine — Point-in-Time Quantitative Value Research</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- KaTeX for math formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #080A0F; color: #94A3B8; font-family: 'Plus Jakarta Sans', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; }
+    .card { background-color: #0E131E; border: 1px solid #1E293B; }
+    .card-subtle { background-color: #0B0E17; border: 1px solid #162032; }
+    .warning-box { background-color: #120F12; border: 1px solid #332026; }
+  </style>
+</head>
+<body class="selection:bg-slate-700 selection:text-white antialiased text-slate-400">
+
+  <!-- TOP STATUS BAR -->
+  <div class="border-b border-slate-800/80 bg-[#080A0F] text-xs py-2.5 px-4 font-mono">
+    <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+        <span class="text-slate-200 font-semibold tracking-tight">Value Investing Engine</span>
+        <span class="text-slate-600">/</span>
+        <span class="text-slate-400">Quantitative Research Retrospective</span>
+      </div>
+      <div class="flex items-center gap-4 text-slate-400 text-[11px]">
+        <span>Tested: <strong class="text-slate-200">2018–2024 (83 Months)</strong></span>
+        <span>•</span>
+        <span>Universe: <strong class="text-slate-200">1,000 Stocks/Month</strong></span>
+        <span>•</span>
+        <a href="https://github.com/Valrivn/Quant" target="_blank" rel="noopener noreferrer" class="text-slate-200 hover:text-white underline inline-flex items-center gap-1 font-medium">
+          Source Code on GitHub &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main class="max-w-5xl mx-auto px-4 py-10 space-y-12">
+
+    <!-- HERO HEADER -->
+    <header class="space-y-3">
+      <div class="text-xs font-mono uppercase tracking-wider text-slate-500">
+        Systematic Equity Research &bull; Point-in-Time Historical Evaluation
+      </div>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+        Value Investing Engine
+      </h1>
+      <p class="text-base sm:text-lg text-slate-300 font-light max-w-3xl leading-relaxed">
+        A research project investigating whether fundamental Value Investing principles (Graham, Buffett, Damodaran) can be systematically automated in code—combining balance sheet fundamentals with qualitative business indicators to evaluate risk-adjusted performance against the S&amp;P 500.
+      </p>
+    </header>
+
+    <!-- SECTION 1: THE 30-SECOND HOOK (3 SUMMARY BOXES) -->
+    <section id="hook" class="space-y-3">
+      <div class="text-xs font-mono font-semibold uppercase tracking-wider text-slate-500">
+        Project Overview &bull; 30-Second Summary
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Box 1 -->
+        <div class="card p-5 rounded-lg flex flex-col justify-between">
+          <div>
+            <div class="text-xs font-mono text-slate-400 uppercase tracking-wide mb-1 font-semibold">1 &bull; Research Objective</div>
+            <h2 class="text-base font-bold text-white mb-2">Automating Intrinsic Value</h2>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Tested whether algorithmic selection based on Point-in-Time cash-flow yields (<span class="font-mono text-slate-300">ROIC &minus; WACC</span>), balance sheet durability, and business moat indicators can generate risk-adjusted returns without taking uncompensated beta.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 text-[11px] text-slate-500 font-mono">
+            Focus: Fundamental cash generation, not price timing.
+          </div>
+        </div>
+
+        <!-- Box 2 -->
+        <div class="card p-5 rounded-lg flex flex-col justify-between">
+          <div>
+            <div class="text-xs font-mono text-slate-400 uppercase tracking-wide mb-1 font-semibold">2 &bull; The Audit Discovery</div>
+            <h2 class="text-base font-bold text-white mb-2">Addressing Lookahead Bias</h2>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Early backtests showed an unexpected ~60% annual return. A code audit revealed that financial statement tables were accessing restated filings published after the simulated trade dates. The pipeline was rebuilt from scratch with strict point-in-time constraints.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 text-[11px] text-slate-500 font-mono">
+            Standard: Verifiable data integrity over cosmetic returns.
+          </div>
+        </div>
+
+        <!-- Box 3 -->
+        <div class="card p-5 rounded-lg flex flex-col justify-between">
+          <div>
+            <div class="text-xs font-mono text-slate-400 uppercase tracking-wide mb-1 font-semibold">3 &bull; The Verified Result</div>
+            <h2 class="text-base font-bold text-white mb-2">Capital Preservation Focus</h2>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Once sanitized, annualized return moderated to 11.57% (SPY: 13.00%). However, the engine reduced market sensitivity to a <span class="font-mono text-slate-200 font-semibold">0.63 Beta</span>, limited maximum drawdown to <span class="font-mono text-slate-200 font-semibold">&minus;17.78%</span> (vs. SPY &minus;23.93%), and held down-market capture to <span class="font-mono text-slate-200 font-semibold">64.3%</span>.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 text-[11px] text-slate-500 font-mono">
+            Outcome: Traded excess market exposure for downside protection.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: DATA INTEGRITY & AUDIT STANDARDS -->
+    <section id="methodology" class="space-y-4">
+      <div class="text-xs font-mono font-semibold uppercase tracking-wider text-slate-500">
+        Methodology &amp; Verification &bull; Why This Backtest Can Be Trusted
+      </div>
+
+      <div class="card p-6 rounded-lg space-y-4">
+        <p class="text-xs text-slate-300 leading-relaxed font-sans">
+          Backtests can produce distorted results when subtle temporal assumptions are overlooked. Below is an outline of the specific data controls, execution timing, and friction models enforced in this project:
+        </p>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse font-mono">
+            <thead>
+              <tr class="bg-slate-900/60 text-slate-400 border-b border-slate-800">
+                <th class="py-2.5 px-3">Dimension</th>
+                <th class="py-2.5 px-3 text-slate-400">Common Simplification</th>
+                <th class="py-2.5 px-3 text-white">Engine Implementation</th>
+                <th class="py-2.5 px-3">Methodological Reason</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/60 text-slate-300">
+              <tr>
+                <td class="py-2 px-3 font-semibold text-white">Filing Dates</td>
+                <td class="py-2 px-3 text-slate-400">Uses fiscal quarter-end date (e.g. Dec 31)</td>
+                <td class="py-2 px-3 text-white font-bold">Exact SEC publication date (<code class="text-slate-200">filed_date</code>)</td>
+                <td class="py-2 px-3 text-slate-400 font-sans">Public companies file 10-Qs weeks after quarter close. Trading on quarter-end introduces lookahead bias.</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-3 font-semibold text-white">Missing Financial Data</td>
+                <td class="py-2 px-3 text-slate-400">Interpolated with sector averages or static defaults</td>
+                <td class="py-2 px-3 text-white font-bold">Strict Fail-Closed (asset dropped immediately)</td>
+                <td class="py-2 px-3 text-slate-400 font-sans">Prevents companies with incomplete reporting or unverified figures from entering the portfolio.</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-3 font-semibold text-white">Execution Friction</td>
+                <td class="py-2 px-3 text-slate-400">Assumes zero cost or flat 5 bps fee</td>
+                <td class="py-2 px-3 text-white font-bold">Dynamic square-root market impact slippage</td>
+                <td class="py-2 px-3 text-slate-400 font-sans">Accounts for bid-ask spreads and liquidity constraints based on trade size relative to daily volume.</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-3 font-semibold text-white">Data Sourcing</td>
+                <td class="py-2 px-3 text-slate-400">Unverified web scrapers or third-party restated datasets</td>
+                <td class="py-2 px-3 text-white font-bold">Official Public REST APIs (SEC EDGAR, FRED, USPTO)</td>
+                <td class="py-2 px-3 text-slate-400 font-sans">Ensures data reproducibility, compliance with Terms of Service, and un-restated historical accuracy.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: ARCHITECTURE & DATA SOURCES (WITH THE QUALITATIVE BREAKDOWN) -->
+    <section id="architecture" class="space-y-4">
+      <div class="text-xs font-mono font-semibold uppercase tracking-wider text-slate-500">
+        System Architecture &bull; Qualitative Indicators &amp; Data Limitations
+      </div>
+
+      <div class="card p-6 rounded-lg space-y-6">
+        <!-- 4 Steps Flow -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <!-- Step 1 -->
+          <div class="card-subtle p-4 rounded">
+            <div class="text-[10px] font-mono uppercase text-slate-500 mb-1">Step 1</div>
+            <div class="text-sm font-bold text-white mb-1">Public Ingestion</div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Fetches SEC EDGAR filings via official API endpoints using the exact publication timestamp, alongside Treasury yields from FRED.
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="card-subtle p-4 rounded">
+            <div class="text-[10px] font-mono uppercase text-slate-500 mb-1">Step 2</div>
+            <div class="text-sm font-bold text-white mb-1">Valuation &amp; Risk</div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Calculates DCF intrinsic value, de-levers peer betas to isolate operating risk, and assesses qualitative business durability metrics.
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="card-subtle p-4 rounded">
+            <div class="text-[10px] font-mono uppercase text-slate-500 mb-1">Step 3</div>
+            <div class="text-sm font-bold text-white mb-1">Fail-Closed Verification</div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Assets with missing indicators or unverified timestamps are excluded immediately. No synthetic fallbacks are permitted.
+            </p>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="card-subtle p-4 rounded">
+            <div class="text-[10px] font-mono uppercase text-slate-500 mb-1">Step 4</div>
+            <div class="text-sm font-bold text-white mb-1">Execution &amp; Buffer</div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Constructs an equal-weighted basket of up to 25 undervalued companies, with a 15% Treasury buffer (BIL) and a 15% turnover deadband.
+            </p>
+          </div>
+        </div>
+
+        <!-- Qualitative Moat Data Breakdown (Min-Maxed) -->
+        <div class="border-t border-slate-800 pt-5 space-y-3">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <div class="text-xs font-mono font-semibold text-slate-300 uppercase">
+              Qualitative Moat Indicators Evaluated
+            </div>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">Official REST APIs &bull; Zero Scraping</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="p-3.5 rounded card-subtle border border-slate-800 space-y-1.5">
+              <div class="font-bold text-white font-mono flex items-center gap-2">
+                <span>1. Patent Velocity (USPTO PatentsView API)</span>
+              </div>
+              <p class="text-slate-400 leading-relaxed">
+                Tracks 12-month patent grant acceleration to evaluate whether technological innovation is accelerating or decelerating relative to peers.
+              </p>
+            </div>
+
+            <div class="p-3.5 rounded card-subtle border border-slate-800 space-y-1.5">
+              <div class="font-bold text-white font-mono flex items-center gap-2">
+                <span>2. Management Disclosure Tone (SEC EDGAR MD&amp;A)</span>
+              </div>
+              <p class="text-slate-400 leading-relaxed">
+                Evaluates annual 10-K management letters for changes in defensive phrasing, litigation disclosures, or sudden reporting complexity.
+              </p>
+            </div>
+
+            <div class="p-3.5 rounded card-subtle border border-slate-800 space-y-1.5">
+              <div class="font-bold text-white font-mono flex items-center gap-2">
+                <span>3. Consumer Complaint Frequency (CFPB Open API)</span>
+              </div>
+              <p class="text-slate-400 leading-relaxed">
+                Monitors federal consumer complaint velocity from the Consumer Financial Protection Bureau database to track customer trust trends.
+              </p>
+            </div>
+
+            <div class="p-3.5 rounded card-subtle border border-slate-800 space-y-1.5">
+              <div class="font-bold text-white font-mono flex items-center gap-2">
+                <span>4. Public Attention &amp; Visibility (Wikimedia API)</span>
+              </div>
+              <p class="text-slate-400 leading-relaxed">
+                Analyzes organic public search traffic via Wikimedia REST endpoints to distinguish enduring consumer interest from declining visibility.
+              </p>
+            </div>
+          </div>
+
+          <!-- THE DATA LIMITATION WARNING BOX -->
+          <div class="p-4 rounded warning-box text-xs text-slate-300 space-y-2 font-mono">
+            <div class="text-slate-200 font-bold flex items-center gap-2 text-xs">
+              <span>⚠️</span> Methodological Limitation &bull; Qualitative Data Depth
+            </div>
+            <p class="text-slate-400 leading-relaxed font-sans">
+              A key constraint of this study is the <strong>historical depth asymmetry between financial and qualitative data</strong>.
+            </p>
+            <p class="text-slate-400 leading-relaxed font-sans">
+              While SEC EDGAR financial records provide standardized history back to 2010, alternative public APIs (such as patent feeds and consumer complaint logs) only provide survivor-bias-free data beginning around <strong>2022</strong>. Retroactively imputing or backfilling qualitative scores prior to 2022 would introduce survivorship and lookahead bias.
+            </p>
+            <p class="text-slate-300 leading-relaxed font-sans">
+              <strong>Implementation Approach:</strong> To maintain strict data integrity, the engine partitions qualitative indicators to prospective periods where verified records exist, relying exclusively on Point-in-Time financial statements for the full 2018–2024 backtest.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: THE INTERACTIVE REALITY CHECK (MINIMAL TOGGLE) -->
+    <section id="audit-comparison" class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="text-xs font-mono font-semibold uppercase tracking-wider text-slate-500">
+          Empirical Comparison &bull; Sanitized Engine vs. Unsanitized Baseline
+        </div>
+
+        <!-- 2-Button Toggle -->
+        <div class="inline-flex p-0.5 bg-slate-900 border border-slate-800 rounded">
+          <button id="btn-post" onclick="setAuditView('post')" class="px-3 py-1 rounded text-xs font-mono font-medium transition-colors bg-slate-800 text-white border border-slate-700">
+            Sanitized Engine (Point-in-Time)
+          </button>
+          <button id="btn-pre" onclick="setAuditView('pre')" class="px-3 py-1 rounded text-xs font-mono font-medium transition-colors text-slate-400 hover:text-white border border-transparent">
+            Unsanitized Baseline (Pre-Audit)
+          </button>
+        </div>
+      </div>
+
+      <div class="card rounded-lg overflow-hidden border border-slate-800">
+        <div id="view-banner" class="px-5 py-3 border-b border-slate-800 bg-[#0B0E17] text-xs font-mono flex items-center justify-between text-slate-300">
+          <div><strong class="text-white">Active View:</strong> Sanitized Engine (Fail-Closed, Zero Lookahead)</div>
+          <span class="text-slate-500">Tested: 2018–2024</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse font-mono">
+            <thead>
+              <tr class="bg-slate-900/60 text-slate-400 border-b border-slate-800">
+                <th class="py-3 px-4 font-semibold">Metric</th>
+                <th class="py-3 px-4 font-semibold text-white" id="col-engine-name">Sanitized Engine</th>
+                <th class="py-3 px-4 font-semibold text-slate-300">S&amp;P 500 (SPY)</th>
+                <th class="py-3 px-4 font-semibold text-slate-400">Interpretation</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/60 text-slate-300">
+              <tr>
+                <td class="py-2.5 px-4 font-semibold text-white">Annualized Return (CAGR)</td>
+                <td class="py-2.5 px-4 font-bold text-white text-sm" id="val-cagr">11.57%</td>
+                <td class="py-2.5 px-4 text-slate-300">13.00%</td>
+                <td class="py-2.5 px-4 text-slate-400 font-sans" id="note-cagr">Grounded compound growth after accounting for dynamic slippage.</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 font-semibold text-white">Market Risk (Beta &beta;)</td>
+                <td class="py-2.5 px-4 font-bold text-white text-sm" id="val-beta">0.63</td>
+                <td class="py-2.5 px-4 text-slate-300">1.00</td>
+                <td class="py-2.5 px-4 text-slate-400 font-sans" id="note-beta">Demonstrates 37% less sensitivity to broader market movements.</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 font-semibold text-white">Down-Market Capture</td>
+                <td class="py-2.5 px-4 font-bold text-white text-sm" id="val-down">64.3%</td>
+                <td class="py-2.5 px-4 text-slate-300">100.0%</td>
+                <td class="py-2.5 px-4 text-slate-400 font-sans" id="note-down">Portfolio captured 64.3% of the benchmark's losses during down months.</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 font-semibold text-white">Maximum Drawdown</td>
+                <td class="py-2.5 px-4 font-bold text-white text-sm" id="val-dd">&minus;17.78%</td>
+                <td class="py-2.5 px-4 text-slate-300">&minus;23.93%</td>
+                <td class="py-2.5 px-4 text-slate-400 font-sans" id="note-dd">Reflects smaller peak-to-trough decline during market contractions.</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 font-semibold text-white">Sortino Ratio</td>
+                <td class="py-2.5 px-4 font-bold text-white text-sm" id="val-sortino">1.13</td>
+                <td class="py-2.5 px-4 text-slate-300">1.04</td>
+                <td class="py-2.5 px-4 text-slate-400 font-sans" id="note-sortino">Favorable risk-adjusted return relative strictly to downside volatility.</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 font-semibold text-white">Missing Data Policy</td>
+                <td class="py-2.5 px-4 font-bold text-slate-200" id="val-data">Fail-Closed (Immediate Drop)</td>
+                <td class="py-2.5 px-4 text-slate-400">Index Baseline</td>
+                <td class="py-2.5 px-4 text-slate-400 font-sans" id="note-data">Excludes assets with incomplete filings; zero synthetic placeholders.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: POINT-BLANK TIMELINE (THE FAILURE LOG) -->
+    <section id="timeline" class="space-y-4">
+      <div class="text-xs font-mono font-semibold uppercase tracking-wider text-slate-500">
+        Project Chronology &bull; Methodological Challenges &amp; Solutions
+      </div>
+
+      <div class="space-y-3">
+        <!-- June 2026 -->
+        <div class="card p-4 rounded-lg">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2 font-mono text-xs">
+            <span class="text-white font-bold">June 2026: Identifying Lookahead Leakage</span>
+            <span class="text-slate-500">Issue: Restatement Lookahead Bias</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed mb-1">
+            <strong>Initial Observation:</strong> An early prototype produced an unrealistic ~60% annual return.
+          </p>
+          <p class="text-xs text-slate-400 leading-relaxed mb-2">
+            <strong>Diagnostic Finding:</strong> Financial statement tables were pulling restated values published months after the simulated trade dates, inadvertently trading with hindsight.
+          </p>
+          <div class="text-xs text-slate-300 font-mono pt-2 border-t border-slate-800">
+            <strong>Remedy:</strong> Reconstructed the data ingestion pipeline to index strictly to SEC publication timestamps (<code class="text-white">filed_date</code>).
+          </div>
+        </div>
+
+        <!-- July 2026 -->
+        <div class="card p-4 rounded-lg">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2 font-mono text-xs">
+            <span class="text-white font-bold">July 2026: Evaluating Small-Cap Alpha</span>
+            <span class="text-slate-500">Issue: Factor Beta vs. Genuine Alpha</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed mb-1">
+            <strong>Initial Observation:</strong> A screen targeting undervalued small-cap equities yielded 15.34% return, but incurred a &minus;51.7% maximum drawdown.
+          </p>
+          <p class="text-xs text-slate-400 leading-relaxed mb-2">
+            <strong>Diagnostic Finding:</strong> Fama-French 5-Factor regression yielded an alpha intercept of +3.93% with <span class="font-mono text-slate-200">t = 0.75 (p = 0.45)</span>, indicating that excess return was driven by unhedged market beta rather than selection skill.
+          </p>
+          <div class="text-xs text-slate-300 font-mono pt-2 border-t border-slate-800">
+            <strong>Remedy:</strong> Removed discretionary small-cap tilt; introduced a 15% short-term Treasury allocation (BIL) to dampen portfolio drawdown.
+          </div>
+        </div>
+
+        <!-- August 2026 -->
+        <div class="card p-4 rounded-lg">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2 font-mono text-xs">
+            <span class="text-white font-bold">August 2026: Managing Alternative Data Depth</span>
+            <span class="text-slate-500">Issue: Survivorship &amp; Historical Coverage Asymmetry</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed mb-1">
+            <strong>Initial Observation:</strong> Attempted to backtest unstructured sentiment and patent velocity across the complete 2018–2024 horizon.
+          </p>
+          <p class="text-xs text-slate-400 leading-relaxed mb-2">
+            <strong>Diagnostic Finding:</strong> Alternative datasets lacked standardized, survivor-bias-free coverage prior to 2022. Retroactively backfilling missing periods introduced data snooping.
+          </p>
+          <div class="text-xs text-slate-300 font-mono pt-2 border-t border-slate-800">
+            <strong>Remedy:</strong> Quarantined alternative indicators to prospective periods; restricted long-horizon historical testing to audited SEC fundamentals.
+          </div>
+        </div>
+
+        <!-- September 2026 -->
+        <div class="card p-4 rounded-lg">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2 font-mono text-xs">
+            <span class="text-white font-bold">September 2026: Resolving Data Loader Fallbacks</span>
+            <span class="text-slate-500">Issue: Silent Default Values</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed mb-1">
+            <strong>Initial Observation:</strong> Multi-period walk-forward backtests unexpectedly collapsed to negative returns (&minus;1.24%).
+          </p>
+          <p class="text-xs text-slate-400 leading-relaxed mb-2">
+            <strong>Diagnostic Finding:</strong> The data loader queried an incomplete universe partition. Missing fundamentals triggered silent defaults: cost of capital defaulted to <span class="font-mono text-slate-200">WACC = 0.08</span>, and missing classifications defaulted to "Technology".
+          </p>
+          <div class="text-xs text-slate-300 font-mono pt-2 border-t border-slate-800">
+            <strong>Remedy:</strong> Constructed <code class="text-white">merged_pit_universe.parquet</code> (1,000 tickers/month) and replaced silent fallback defaults with fail-closed exceptions.
+          </div>
+        </div>
+
+        <!-- October 2026 -->
+        <div class="card p-4 rounded-lg">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2 font-mono text-xs">
+            <span class="text-white font-bold">October 2026: Purging Cardboard Dummies &amp; Fallbacks</span>
+            <span class="text-slate-500">Issue: Heuristic Placeholders in Validation</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed mb-1">
+            <strong>Initial Observation:</strong> An un-embargoed run reported an apparent 21.70% CAGR with high Fama-French alpha (<span class="font-mono text-slate-200">t = 4.70</span>).
+          </p>
+          <p class="text-xs text-slate-400 leading-relaxed mb-2">
+            <strong>Diagnostic Finding:</strong> An AST scan identified fallback placeholders: missing revisions returned <code class="text-slate-200">0.05</code>, margins returned <code class="text-slate-200">0.60</code>, and validation used a static <code class="text-slate-200">oos_hit_rate = 0.62</code>, granting unvetted assets portfolio entry.
+          </p>
+          <div class="text-xs text-slate-300 font-mono pt-2 border-t border-slate-800">
+            <strong>Remedy:</strong> Permanently removed all placeholder defaults. Added dynamic square-root slippage and a 15% hysteresis turnover deadband. Returns settled at 11.57% with 0.63 Beta.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: MATHEMATICAL FORMULAS + 1-SENTENCE TRANSLATIONS -->
+    <section id="formulas" class="space-y-4">
+      <div class="text-xs font-mono font-semibold uppercase tracking-wider text-slate-500">
+        Mathematical Formulation &bull; Core Equations &amp; Plain-English Summary
+      </div>
+
+      <div class="space-y-4">
+        <!-- Formula 1: DCF -->
+        <div class="card p-5 rounded-lg space-y-2">
+          <div class="text-xs font-mono text-slate-400 font-semibold uppercase">1. Discounted Cash Flow &amp; Reinvestment Growth (Damodaran)</div>
+          <div class="py-2 text-center text-slate-200 font-mono text-sm sm:text-base overflow-x-auto">
+            $$\text{Value}_0 = \sum_{t=1}^{T} \frac{\text{Cash Flow}_t}{(1 + \text{Discount Rate})^t} + \frac{\text{Terminal Value}}{(1 + \text{Discount Rate})^T}$$
+          </div>
+          <p class="text-xs text-slate-300 pt-2 border-t border-slate-800 leading-relaxed font-sans">
+            <strong>Plain English:</strong> Calculates what future cash flows are worth in today's dollars, where growth must be funded by reinvested profits rather than assumed arbitrary growth percentages.
+          </p>
+        </div>
+
+        <!-- Formula 2: Bottom-Up Beta -->
+        <div class="card p-5 rounded-lg space-y-2">
+          <div class="text-xs font-mono text-slate-400 font-semibold uppercase">2. Bottom-Up Operating Beta (Damodaran)</div>
+          <div class="py-2 text-center text-slate-200 font-mono text-sm sm:text-base overflow-x-auto">
+            $$\beta_{\text{business}} = \frac{\beta_{\text{stock}}}{1 + (1 - \text{tax})\frac{\text{Debt}}{\text{Equity}}}$$
+          </div>
+          <p class="text-xs text-slate-300 pt-2 border-t border-slate-800 leading-relaxed font-sans">
+            <strong>Plain English:</strong> Strips out corporate debt to isolate the fundamental operating risk of the underlying business, preventing stock price noise from distorting cost of capital.
+          </p>
+        </div>
+
+        <!-- Formula 3: Dynamic Slippage -->
+        <div class="card p-5 rounded-lg space-y-2">
+          <div class="text-xs font-mono text-slate-400 font-semibold uppercase">3. Market Impact Slippage Formulation</div>
+          <div class="py-2 text-center text-slate-200 font-mono text-sm sm:text-base overflow-x-auto">
+            $$\text{Cost}_{\text{bps}} = \frac{\text{Spread}}{2} + \text{Fee} + \eta \cdot \sigma_{\text{daily}} \sqrt{\frac{\text{Trade Size}}{\text{ADV}}} \times 10{,}000$$
+          </div>
+          <p class="text-xs text-slate-300 pt-2 border-t border-slate-800 leading-relaxed font-sans">
+            <strong>Plain English:</strong> Penalizes trading costs based on order size relative to average daily volume, ensuring realistic execution drag during volatile periods.
+          </p>
+        </div>
+
+        <!-- Formula 4: Risk Metrics -->
+        <div class="card p-5 rounded-lg space-y-2">
+          <div class="text-xs font-mono text-slate-400 font-semibold uppercase">4. Market Sensitivity (&beta;) &amp; Downside Deviation (Sortino)</div>
+          <div class="py-2 text-center text-slate-200 font-mono text-sm sm:text-base overflow-x-auto">
+            $$\beta = \frac{\text{Cov}(R_{\text{portfolio}}, R_{\text{market}})}{\text{Var}(R_{\text{market}})}, \quad \text{Sortino} = \frac{\text{Return} - R_f}{\sqrt{\frac{1}{N}\sum_{t=1}^N \min(0, R_{p,t} - R_f)^2}}$$
+          </div>
+          <p class="text-xs text-slate-300 pt-2 border-t border-slate-800 leading-relaxed font-sans">
+            <strong>Plain English:</strong> Beta measures sensitivity to market swings (0.63 indicates 37% less drawdown exposure), while Sortino evaluates returns strictly against downside losses.
+          </p>
+        </div>
+
+        <!-- Formula 5: Hypothesis Testing -->
+        <div class="card p-5 rounded-lg space-y-2">
+          <div class="text-xs font-mono text-slate-400 font-semibold uppercase">5. Cross-Sectional Permutation Null Hypothesis Test (Spiegelhalter)</div>
+          <div class="py-2 text-center text-slate-200 font-mono text-sm sm:text-base overflow-x-auto">
+            $$p\text{-value} = \frac{1}{B} \sum_{b=1}^{B} \mathbb{I}\left( \text{Sharpe}_{\text{null}, b} \ge \text{Sharpe}_{\text{strategy}} \right)$$
+          </div>
+          <p class="text-xs text-slate-300 pt-2 border-t border-slate-800 leading-relaxed font-sans">
+            <strong>Plain English:</strong> Randomly shuffles asset selections 10,000 times under identical market dates to test whether strategy performance reflects a valid signal or random chance.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: FOUNDATIONAL TEXTS & ACKNOWLEDGMENTS -->
+    <section id="credits" class="space-y-4">
+      <div class="text-xs font-mono font-semibold uppercase tracking-wider text-slate-500">
+        Conceptual Lineage &bull; Author Credits &amp; Literature Foundations
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Graham -->
+        <div class="card p-5 rounded-lg">
+          <div class="text-[11px] font-mono text-slate-400 font-semibold uppercase mb-1">Margin of Safety &bull; Valuing Real Businesses</div>
+          <div class="text-base font-bold text-white mb-1">The Intelligent Investor</div>
+          <div class="text-xs text-slate-400 font-mono mb-2">by Benjamin Graham (with Warren Buffett)</div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Provided the framework that equity shares represent fractional ownership of operating businesses. The concept of Margin of Safety establishes that purchases should only occur at a meaningful discount to intrinsic cash-generating capability.
+          </p>
+        </div>
+
+        <!-- Damodaran -->
+        <div class="card p-5 rounded-lg">
+          <div class="text-[11px] font-mono text-slate-400 font-semibold uppercase mb-1">Valuation Formulation &bull; Cost of Capital</div>
+          <div class="text-base font-bold text-white mb-1">Investment Valuation</div>
+          <div class="text-xs text-slate-400 font-mono mb-2">by Prof. Aswath Damodaran (NYU Stern)</div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Supplied the quantitative mechanics for the valuation layer: capitalizing R&amp;D over 3–5 year amortization schedules, de-levering industry sector betas, and linking growth directly to reinvested capital.
+          </p>
+        </div>
+
+        <!-- Lynch -->
+        <div class="card p-5 rounded-lg">
+          <div class="text-[11px] font-mono text-slate-400 font-semibold uppercase mb-1">Business Cycles &bull; 6 Corporate Lifecycles</div>
+          <div class="text-base font-bold text-white mb-1">One Up On Wall Street</div>
+          <div class="text-xs text-slate-400 font-mono mb-2">by Peter Lynch</div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Informed the archetype classification engine: categorizing companies into 6 lifecycles (Fast Growers, Stalwarts, Slow Growers, Cyclicals, Turnarounds, Asset Plays) to avoid applying uniform valuation multiples across disparate business models.
+          </p>
+        </div>
+
+        <!-- Spiegelhalter -->
+        <div class="card p-5 rounded-lg">
+          <div class="text-[11px] font-mono text-slate-400 font-semibold uppercase mb-1">Data Skepticism &bull; Statistical Falsification</div>
+          <div class="text-base font-bold text-white mb-1">The Art of Statistics: How to Learn from Data</div>
+          <div class="text-xs text-slate-400 font-mono mb-2">by Sir David Spiegelhalter</div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Established the testing framework for hypothesis validation: using permutation tests, p-values, and embargoed holdouts to evaluate whether empirical returns represent true inefficiencies rather than historical noise fitting.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800 bg-[#080A0F] py-8 px-4 text-center text-xs text-slate-500 font-mono mt-16">
+    <div class="max-w-5xl mx-auto space-y-2">
+      <div>Value Investing Engine &bull; Quantitative Equity Research Project</div>
+      <div>
+        Source Code: <a href="https://github.com/Valrivn/Quant" target="_blank" rel="noopener noreferrer" class="text-slate-300 hover:text-white underline">https://github.com/Valrivn/Quant</a>
+      </div>
+      <div class="text-[11px] text-slate-600">
+        Static client-side architecture &bull; Zero tracking or analytics &bull; 100% Official REST APIs
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT FOR TOGGLE -->
+  <script>
+    function setAuditView(view) {
+      const btnPost = document.getElementById('btn-post');
+      const btnPre = document.getElementById('btn-pre');
+      const banner = document.getElementById('view-banner');
+      const colName = document.getElementById('col-engine-name');
+
+      const valCagr = document.getElementById('val-cagr');
+      const valBeta = document.getElementById('val-beta');
+      const valDown = document.getElementById('val-down');
+      const valDd = document.getElementById('val-dd');
+      const valSortino = document.getElementById('val-sortino');
+      const valData = document.getElementById('val-data');
+
+      const noteCagr = document.getElementById('note-cagr');
+      const noteBeta = document.getElementById('note-beta');
+      const noteDown = document.getElementById('note-down');
+      const noteDd = document.getElementById('note-dd');
+      const noteSortino = document.getElementById('note-sortino');
+      const noteData = document.getElementById('note-data');
+
+      if (view === 'pre') {
+        btnPre.className = 'px-3 py-1 rounded text-xs font-mono font-medium transition-colors bg-slate-800 text-white border border-slate-700';
+        btnPost.className = 'px-3 py-1 rounded text-xs font-mono font-medium transition-colors text-slate-400 hover:text-white border border-transparent';
+        banner.innerHTML = '<div><strong class="text-white">Active View:</strong> Unsanitized Baseline (Lookahead Bias, Fallback Placeholders)</div><span class="text-slate-500">Unsanitized Run</span>';
+        colName.textContent = 'Unsanitized Baseline';
+
+        valCagr.textContent = '21.70%';
+        valBeta.textContent = '0.99';
+        valDown.textContent = '80.5%';
+        valDd.textContent = '-20.98%';
+        valSortino.textContent = '0.53*';
+        valData.textContent = 'Fallback Defaults (oos_hit_rate=0.62)';
+
+        noteCagr.textContent = 'Artificially elevated by reading financial statements after the trade date.';
+        noteBeta.textContent = 'Exhibits market-level volatility without systematic downside protection.';
+        noteDown.textContent = 'Absorbed 80.5% of benchmark declines during down months.';
+        noteDd.textContent = 'Elevated drawdown driven by holding unvetted micro-cap securities.';
+        noteSortino.textContent = 'Calculation affected by an unscaled annualization divisor.';
+        noteData.textContent = 'Missing fundamentals received static passing placeholders.';
+      } else {
+        btnPost.className = 'px-3 py-1 rounded text-xs font-mono font-medium transition-colors bg-slate-800 text-white border border-slate-700';
+        btnPre.className = 'px-3 py-1 rounded text-xs font-mono font-medium transition-colors text-slate-400 hover:text-white border border-transparent';
+        banner.innerHTML = '<div><strong class="text-white">Active View:</strong> Sanitized Engine (Fail-Closed, Zero Lookahead)</div><span class="text-slate-500">Tested: 2018–2024</span>';
+        colName.textContent = 'Sanitized Engine';
+
+        valCagr.textContent = '11.57%';
+        valBeta.textContent = '0.63';
+        valDown.textContent = '64.3%';
+        valDd.textContent = '-17.78%';
+        valSortino.textContent = '1.13';
+        valData.textContent = 'Fail-Closed (Immediate Drop)';
+
+        noteCagr.textContent = 'Grounded compound growth after accounting for dynamic slippage.';
+        noteBeta.textContent = 'Demonstrates 37% less sensitivity to broader market movements.';
+        noteDown.textContent = 'Portfolio captured 64.3% of the benchmark\'s losses during down months.';
+        noteDd.textContent = 'Reflects smaller peak-to-trough decline during market contractions.';
+        noteSortino.textContent = 'Favorable risk-adjusted return relative strictly to downside volatility.';
+        noteData.textContent = 'Excludes assets with incomplete filings; zero synthetic placeholders.';
+      }
+    }
+  </script>
+</body>
+</html>
